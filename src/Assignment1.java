@@ -7,7 +7,8 @@ import java.io.InputStreamReader;
 public class Assignment1 {
 	
 	static FCFS fcfs;
-	static RoundRobin rr;
+	static RoundRobin rr4;
+	static RoundRobin rr8;
 	
 	public static void main(String[] args) {
 		try {
@@ -17,18 +18,19 @@ public class Assignment1 {
 			
 			// Create Queues
 			fcfs = new FCFS();
-		    rr = new RoundRobin();
+		    rr4 = new RoundRobin();
+		    rr8 = new RoundRobin();
 			
 			while (reader.ready()) {
 				String currentProcess = reader.readLine();
 				String processArray[] = currentProcess.split(" ");
 
 				Process p = new Process(Integer.parseInt(processArray[0]),Integer.parseInt(processArray[1]),Integer.parseInt(processArray[2]));
-				fcfs.addProcessToReadyQueue(p);
+				rr4.addProcessToReadyQueue(p);
 			}
 		
 			//fcfs.print();
-			startScheduler();
+			startSchedulerRR();
 			
 	
 		} catch (FileNotFoundException e) {
@@ -58,6 +60,48 @@ public class Assignment1 {
 				length++;
 				SystemTime++;
 			}
+			System.out.println("<System Time " + SystemTime + ">     " + "Process " + p.getID() + " is finished");
+			SystemTime++;
+			fcfs.readyQueue.dequeue();
+			if (fcfs.isEmpty()) {
+				break;
+			}
+			p = fcfs.readyQueue.first();
+		}
+		
+	}
+	
+	public static void startSchedulerRR() {
+		int SystemTime = 0;
+		System.out.println("Multilevel Feedback Queue Scheduling Algorithm");
+		
+		// First Instance of Round Robin with a quantom of 4.
+		Process p = rr4.readyQueue.first();
+		int quantom = 4;
+		
+		// Iterate through each process
+		for (int i = 0; i < p.getID(); i++) {
+			
+			// Runs the current Process
+			int length = 0;
+			if (p.getBurstLength() > 3) {
+				while (length < p.getBurstLength()) {
+				System.out.println("<System Time " + SystemTime + ">     " + "Process " + p.getID() + " is running");
+				length++;
+				SystemTime++;
+				}
+			}
+            if ( true) {
+				
+			
+			}
+			else {
+				rr8.addProcessToReadyQueue(p);
+				rr4.removeProcessFromReadyQueue();
+			}
+			
+			
+			
 			System.out.println("<System Time " + SystemTime + ">     " + "Process " + p.getID() + " is finished");
 			SystemTime++;
 			fcfs.readyQueue.dequeue();

@@ -3,13 +3,14 @@ public class RoundRobin extends Scheduler {
 
 	@Override
 	public void addProcessToReadyQueue(Process p) {
-		// TODO Auto-generated method stub
+		readyQueue.enqueue(p);
+		System.out.println("Process ID " + p.getID() + " added to queue.");
 		
 	}
 
 	@Override
 	public Process removeProcessFromReadyQueue() {
-		// TODO Auto-generated method stub
+		readyQueue.dequeue();
 		return null;
 	}
 
