@@ -1,7 +1,6 @@
 
 public class Process {
 	int ID, arrivalTime, burstLength;
-	int waitTime, responseTime, TurnaroundTime;
 	
 	public Process(int ID, int arrivalTime, int burstLength) {
 		setID(ID);

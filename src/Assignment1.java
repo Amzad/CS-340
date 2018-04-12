@@ -23,6 +23,8 @@ public class Assignment1 {
 			rr4 = new RoundRobin();
 			rr8 = new RoundRobin();
 
+			
+			// Parse the input file
 			while (reader.ready()) {
 				String currentProcess = reader.readLine();
 				String processArray[] = currentProcess.split(" ");
@@ -31,18 +33,21 @@ public class Assignment1 {
 						Integer.parseInt(processArray[2]));
 				rr4.addProcessToReadyQueue(p);
 			}
+			reader.close();
 
 			System.out.println("Multilevel Feedback Queue Scheduling Algorithm");
 
+			
+		
 			// First Instance of Round Robin with a quantom of 4.
 			Process p = rr4.readyQueue.first();
-			int quantom = 4;
+			int quantom = 4; // Quantom of the first round robin instance
 
 			// Iterate through each process
 			for (int i = 0; i < p.getID(); i++) {
 
 				// Runs the current Process
-				// If the burstlength is greater than the quantom, run up to quantom and pass to next algorithm.
+				// If the burstlength is greater than the quantom, run up to quantom and pass to the next roundrobin
 				int length = 0;
 				if (p.getBurstLength() > quantom) {
 					for (int j = (p.getBurstLength() -quantom);j < p.getBurstLength(); j++) {
@@ -50,28 +55,27 @@ public class Assignment1 {
 						length++;
 						SystemTime++;
 					}
-					p.setBurstLength(p.getBurstLength()-quantom);
-					rr8.addProcessToReadyQueue(p);
-					//rr4.removeProcessFromReadyQueue();
+					p.setBurstLength(p.getBurstLength()-quantom); // Set remaining length
+					rr8.addProcessToReadyQueue(p); // Pass to next roundrobin
+					
 				}
+				// If the length it less than or equal to the quantom it doesn't need to be passed on so just finish it.
 				else if (p.getBurstLength() <= quantom) {
 					while (length < p.getBurstLength()) {
 						System.out.println("<System Time " + SystemTime + ">     " + "Process " + p.getID() + " is running");
 						length++;
 						SystemTime++;	
 					}
-					p.setBurstLength(p.getBurstLength()-quantom);
 					System.out.println("<System Time " + SystemTime + ">     " + "Process " + p.getID() + " is finished");
 					SystemTime++;
 				}
 
-				
-				rr4.removeProcessFromReadyQueue();
+				rr4.removeProcessFromReadyQueue(); // The current process has been either finished or passed on so remove it from queue
 				if (rr4.isEmpty()) {
-					break;
+					break; // exit loop if queue is empty.
 				}
 				else {
-					p = rr4.readyQueue.first();
+					p = rr4.readyQueue.first(); // Next process
 				}
 				
 			}
@@ -94,7 +98,7 @@ public class Assignment1 {
 					}
 					p.setBurstLength(p.getBurstLength()-quantom);
 					fcfs.addProcessToReadyQueue(p);
-					//rr4.removeProcessFromReadyQueue();
+
 				}
 				else if (p.getBurstLength() <= quantom) {
 					while (length < p.getBurstLength()) {
@@ -107,7 +111,6 @@ public class Assignment1 {
 					SystemTime++;
 				}
 
-				
 				rr8.removeProcessFromReadyQueue();
 				if (rr8.isEmpty()) {
 					break;
@@ -118,10 +121,9 @@ public class Assignment1 {
 				
 			}
 			
+			// FIRST COME FIRST SERVE - just need to finish up whatever is left over.
 			p = fcfs.readyQueue.first();
 			for (int i = 0; i < p.getID(); i++) {
-				// System.out.println("<System Time " + SystemTime + ">" + "Process " +
-				// p.getID() + " is running");
 
 				// Runs the current Process
 				int length = 0;
