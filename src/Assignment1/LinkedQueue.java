@@ -1,3 +1,4 @@
+package Assignment1;
 import java.util.LinkedList;
 
 public class LinkedQueue<AnyType> implements Queue<AnyType>

@@ -1,3 +1,4 @@
+package Assignment1;
 public abstract class Scheduler
 {
   protected LinkedQueue<Process> readyQueue;

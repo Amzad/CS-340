@@ -1,3 +1,4 @@
+package Assignment1;
 
 public class Process {
 	int ID, arrivalTime, burstLength;

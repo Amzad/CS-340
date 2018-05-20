@@ -1,3 +1,4 @@
+package Assignment1;
 public interface Queue<AnyType>
 {
   int size();
